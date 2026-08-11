@@ -1,43 +1,21 @@
 import { Router } from "express";
+import User from "../models/User.js";
 
 const router = Router();
 
-let users = [
-  {
-    id: 1,
-    name: "Adeel",
-    email: "adeel@example.com"
-  }
-];
-
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+  const users = await User.find();
   res.json(users);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, email } = req.body;
 
-  const user = {
-    id: Date.now(),
-    name,
-    email
-  };
-
-  users.push(user);
+  const user = await User.create({ name, email });
 
   res.status(201).json({
     message: "User added successfully",
     user
-  });
-});
-
-router.delete("/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  users = users.filter(user => user.id !== id);
-
-  res.json({
-    message: "User deleted successfully"
   });
 });
 

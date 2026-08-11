@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import userRoutes from "./routes/userRoute.js";
 
 dotenv.config();
@@ -26,6 +27,19 @@ app.get("/health", (req, res) => {
 
 const PORT = process.env.PORT || 5050;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    console.log("✅ MongoDB Connected");
+
+    app.listen(process.env.PORT || 5050, "0.0.0.0", () => {
+      console.log("🚀 Server running");
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+startServer();
