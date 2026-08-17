@@ -1,20 +1,20 @@
 # Base image
 FROM node:22-alpine
 
-# Create working directory inside the container
+# Create working directory
 WORKDIR /app
 
-# Copy package files first (better Docker caching)
+# Copy dependency files
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
-# Copy the rest of the application
+# Copy source code
 COPY . .
 
 # Expose application port
 EXPOSE 5050
 
-# Start the server
+# Start application
 CMD ["npm", "start"]

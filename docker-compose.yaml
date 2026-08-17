@@ -1,25 +1,41 @@
 services:
   backend:
-    build: ./server
+    image: YOUR_DOCKER_USERNAME/mern-backend:latest
     container_name: backend
+    restart: unless-stopped
+
     env_file:
-      - ./server/.env
+      - .env
+
     ports:
       - "5050:5050"
+
     depends_on:
       - mongodb
+
   mongodb:
     image: mongo:8
     container_name: mongodb
+
+    restart: unless-stopped
+
     ports:
       - "27017:27017"
+
     volumes:
-      - C:/Users/User/Desktop/Docker-Volume:/data/db
+      - mongodb_data:/data/db
 
   frontend:
-    build: ./client
+    image: YOUR_DOCKER_USERNAME/mern-frontend:latest
     container_name: frontend
+
+    restart: unless-stopped
+
     ports:
-      - "5173:5173"
+      - "80:80"
+
     depends_on:
       - backend
+
+volumes:
+  mongodb_data:
