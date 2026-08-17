@@ -1,6 +1,6 @@
 services:
   backend:
-    image: YOUR_DOCKER_USERNAME/mern-backend:latest
+    image: adeelarshad01/mern-backend:latest
     container_name: backend
     restart: unless-stopped
 
@@ -26,7 +26,7 @@ services:
       - mongodb_data:/data/db
 
   frontend:
-    image: YOUR_DOCKER_USERNAME/mern-frontend:latest
+    image: adeelarshad01/mern-frontend:latest
     container_name: frontend
 
     restart: unless-stopped
