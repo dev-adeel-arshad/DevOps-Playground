@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const backendUrl = import.meta.env.BACKEND_URL || "http://localhost:5050";
+
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ export default function Users() {
 
     async function loadUsers() {
       try {
-        const response = await fetch("http://localhost:5050/api/users", {
+        const response = await fetch(`${backendUrl}/api/users`, {
           signal: controller.signal
         });
 
@@ -33,23 +35,23 @@ export default function Users() {
         <p className="eyebrow">Users</p>
         <h2>Users list</h2>
         <p>
-          This page shows user cards when the API returns data.
+          This page checks the live backend connection and shows data returned from the API.
         </p>
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading live data...</p>
       ) : users.length > 0 ? (
         <div className="user-grid">
           {users.map((user) => (
-            <article className="user-card" key={user.id}>
+            <article className="user-card" key={user.id || user._id || user.email}>
               <h3>{user.name}</h3>
               <p>{user.email}</p>
             </article>
           ))}
         </div>
       ) : (
-        <p>No data found.</p>
+        <p>No data found from the backend yet.</p>
       )}
     </section>
   );

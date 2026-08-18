@@ -128,6 +128,37 @@ p {
   color: var(--text);
 }
 
+.home-hero {
+  text-align: left;
+  background: linear-gradient(135deg, rgba(170, 59, 255, 0.08), rgba(15, 118, 110, 0.08));
+}
+
+.home-copy {
+  max-width: 700px;
+  margin-top: 0.75rem;
+  font-size: 1.06rem;
+  line-height: 1.7;
+}
+
+.home-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.home-tags span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(170, 59, 255, 0.12);
+  border: 1px solid rgba(170, 59, 255, 0.25);
+  color: var(--text-h);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .page-stack {
   display: grid;
   gap: 1rem;

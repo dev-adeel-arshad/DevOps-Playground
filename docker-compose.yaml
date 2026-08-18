@@ -33,6 +33,8 @@ services:
 
     ports:
       - "80:80"
+    env_file:
+      - ./client/.env
 
     depends_on:
       - backend
