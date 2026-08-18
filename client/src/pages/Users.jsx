@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const backendUrl = import.meta.env.BACKEND_URL || "http://localhost:5050";
+const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5050";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
