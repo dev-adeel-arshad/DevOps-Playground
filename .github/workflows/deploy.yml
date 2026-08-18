@@ -47,7 +47,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/mern-app
+            cd ~/DevOps-Playground
 
             docker compose pull
 
