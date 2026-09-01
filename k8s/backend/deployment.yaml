@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  namespace: devops-playground
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+          image: adeelarshad01/mern-backend:latest
+
+          ports:
+            - containerPort: 5050
+
+          envFrom:
+            - secretRef:
+                name: backend-secret

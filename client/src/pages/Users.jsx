@@ -11,13 +11,29 @@ export default function Users() {
 
     async function loadUsers() {
       try {
+        console.log("Fetching users from:", `${backendUrl}/api/users`);
+        
         const response = await fetch(`${backendUrl}/api/users`, {
-          signal: controller.signal
+          signal: controller.signal,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
         });
 
-        const data = response.ok ? await response.json() : [];
-        setUsers(Array.isArray(data) ? data : []);
-      } catch {
+        console.log("Response status:", response.status);
+        console.log("Response ok:", response.ok);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Users data received:", data);
+        
+        setUsers(Array.isArray(data) ? data : (data?.users ? data.users : []));
+      } catch (error) {
+        console.error("Error loading users:", error);
         setUsers([]);
       } finally {
         setLoading(false);
@@ -37,6 +53,9 @@ export default function Users() {
         <p>
           This page checks the live backend connection and shows data returned from the API.
         </p>
+        <p style={{ fontSize: "0.9em", color: "#666" }}>
+          Backend URL: {backendUrl}
+        </p>
       </div>
 
       {loading ? (
@@ -45,13 +64,18 @@ export default function Users() {
         <div className="user-grid">
           {users.map((user) => (
             <article className="user-card" key={user.id || user._id || user.email}>
-              <h3>{user.name}</h3>
-              <p>{user.email}</p>
+              <h3>{user.name || "No name"}</h3>
+              <p>{user.email || "No email"}</p>
             </article>
           ))}
         </div>
       ) : (
-        <p>No data found from the backend yet.</p>
+        <div>
+          <p>No data found from the backend yet.</p>
+          <p style={{ fontSize: "0.9em", color: "#999" }}>
+            Check browser console (F12) for debugging information.
+          </p>
+        </div>
       )}
     </section>
   );
