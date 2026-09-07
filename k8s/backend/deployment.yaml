@@ -12,6 +12,12 @@ spec:
     matchLabels:
       app: backend
 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
   template:
     metadata:
       labels:
@@ -25,6 +31,32 @@ spec:
           ports:
             - containerPort: 5050
 
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5050
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5050
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+
           envFrom:
+            - configMapRef:
+                name: backend-config
             - secretRef:
-                name: backend-secret
+                 name: backend-secret
+                 
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
