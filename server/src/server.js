@@ -25,6 +25,21 @@ app.get("/", (req, res) => {
   });
 });
 
+// STRESS TESTING ENDPOINT FOR HPA SCALING OBJECTIVE
+app.get("/stress", (req, res) => {
+
+    const start = Date.now();
+
+    while (Date.now() - start < 5000) {
+        Math.sqrt(Math.random() * 1000000);
+    }
+
+    res.json({
+        message: "CPU Stress Completed"
+    });
+
+});
+
 app.get("/health", (req, res) => {
   res.json({
     status: "OK"
