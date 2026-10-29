@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+
+kind: RoleBinding
+
+metadata:
+  name: frontend-viewer-binding
+  namespace: devops-playground
+
+subjects:
+- kind: ServiceAccount
+  name: frontend-sa
+  namespace: devops-playground
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-viewer
