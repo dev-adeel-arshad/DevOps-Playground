@@ -19,14 +19,15 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json({
-    message: "Welcome to DevOps Playground API"
+    message: "DevOps Playground Backend API is running",
+    status: "OK"
   });
 });
 
 // STRESS TESTING ENDPOINT FOR HPA SCALING OBJECTIVE
-app.get("/stress", (req, res) => {
+app.get("/api/stress", (req, res) => {
 
     const start = Date.now();
 
@@ -40,7 +41,7 @@ app.get("/stress", (req, res) => {
 
 });
 
-app.get("/health", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.json({
     status: "OK"
   });
